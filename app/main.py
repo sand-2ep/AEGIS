@@ -1,13 +1,10 @@
 from fastapi import FastAPI
+from app.api.routes import router
+from app.core.config import settings
 
 app = FastAPI(
-    title="AEGIS",
-    version="0.1.0"
+    title=settings.project_name,
+    version=settings.version
 )
 
-@app.get("/")
-def root():
-    return{
-        "project":"AEGIS",
-        "status":"running"
-    }
+app.include_router(router)
