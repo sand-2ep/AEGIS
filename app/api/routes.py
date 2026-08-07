@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from app.core.logger import logger
+from app.core.dependencies import get_settings
 
 router = APIRouter(
     prefix = '/api',
@@ -14,7 +15,7 @@ def root():
     }
 
 @router.get("/health")
-def get_health():
+def get_health(settings=Depends(get_settings)):
     logger.info("Health check requested")
     return {"status": "healthy",
-    "service": "AEGIS"}
+    "service": settings.project_name}
